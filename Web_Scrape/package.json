@@ -1,0 +1,19 @@
+{
+  "name": "web_scrape",
+  "version": "1.0.0",
+  "description": "web scrapes for classes",
+  "main": "web_scrape.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bglossner/prereq-class-builder.git"
+  },
+  "author": "Ben and Rupal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bglossner/prereq-class-builder/issues"
+  },
+  "homepage": "https://github.com/bglossner/prereq-class-builder#readme"
+}
