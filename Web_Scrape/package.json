@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/bglossner/prereq-class-builder/issues"
   },
-  "homepage": "https://github.com/bglossner/prereq-class-builder#readme"
+  "homepage": "https://github.com/bglossner/prereq-class-builder#readme",
+  "dependencies": {
+    "jssoup": "0.0.10",
+    "mongodb": "^3.2.7",
+    "node-fetch": "^2.6.0",
+    "xmlhttprequest": "^1.8.0"
+  }
 }
