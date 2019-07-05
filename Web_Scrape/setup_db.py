@@ -41,6 +41,43 @@ def check_insertion_majors(db):
     major_obj = db['majors_collection'].find_one({"mid":"MATH"})
     pprint.pprint(major_obj);
 
+def insert_minors_collection(db):
+    minors = [
+            {
+                "mid": "DATA",
+                "Name": "Data Science",
+                "Needed": [],
+                "Support": [],
+                "GEs": [],
+                "Units": 0,
+                "Concentrations": []
+                },
+            {
+                "mid": "MATH",
+                "Name": "Mathematics",
+                "Needed": [],
+                "Support": [],
+                "GEs": [],
+                "Units": 0,
+                "Concentrations": []
+                }
+            ]
+    # Inserting multiple documents (rows) into the collection (table)
+    # Note: To insert one document, object must be a dictionary and use
+    # insert_one(object)
+    db.minors_collection.insert_many(minors)
+
+def check_insertion_minors(db):
+    # Get all the documents in a collection with find()
+    print("\nPRINTING ALL MINORS")
+    for minor in db.minors_collection.find():
+        pprint.pprint(minor)
+    # Get first document matching the condition passed in from a collection with
+    # find_one(). If nothing is specified, first doc in collection is passed back
+    print("\nQUERYING DATA")
+    major_obj = db['minors_collection'].find_one({"mid":"DATA"})
+    pprint.pprint(major_obj);
+
 def insert_classes_collection(db):
     classes = [
             {
@@ -123,6 +160,8 @@ if dbname in dbnames:
 prereq_db = client[dbname]
 insert_majors_collection(prereq_db)
 check_insertion_majors(prereq_db)
+insert_minors_collection(prereq_db)
+check_insertion_minors(prereq_db)
 insert_classes_collection(prereq_db)
 check_insertion_classes(prereq_db)
 insert_general_ed_collection(prereq_db)
