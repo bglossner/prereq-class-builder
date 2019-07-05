@@ -1,49 +1,95 @@
 import pprint
 from pymongo import MongoClient
+
+def insert_majors_collection(db):
+    majors = [
+            {
+                "mid": "CSC",
+                "Name": "Computer Science",
+                "Needed": [],
+                "Support": [],
+                "GEs": [],
+                "Units": 0,
+                "Concentrations": []
+                },
+            {
+                "mid": "MATH",
+                "Name": "Mathematics",
+                "Needed": [],
+                "Support": [],
+                "GEs": [],
+                "Units": 0,
+                "Concentrations": []
+                }
+            ]
+    # Inserting multiple documents (rows) into the collection (table)
+    # Note: To insert one document, object must be a dictionary and use
+    # insert_one(object)
+    db.majors_collection.insert_many(majors)
+
+def check_insertion_majors(db):
+    # Get all the documents in a collection with find()
+    print("\nPRINTING ALL MAJORS")
+    for major in db.majors_collection.find():
+        pprint.pprint(major)
+    # Get first document matching the condition passed in from a collection with
+    # find_one(). If nothing is specified, first doc in collection is passed back
+    print("\nQUERYING CSC")
+    major_obj = db['majors_collection'].find_one({"mid":"CSC"})
+    pprint.pprint(major_obj);
+    print("\nQUERYING MATH")
+    major_obj = db['majors_collection'].find_one({"mid":"MATH"})
+    pprint.pprint(major_obj);
+
+def insert_classes_collection(db):
+    classes = [
+            {
+                "cid": "CSC_202",
+                "Name": "Data Structures",
+                "Prereqs": [],
+                "Majors": [], #Should be mid
+                "Terms_offered": [],
+                "Units": 0,
+                },
+            {
+                "cid": "MATH_143",
+                "Name": "Calculus III",
+                "Prereqs": [],
+                "Majors": [], #Should be mid
+                "Terms_offered": [],
+                "Units": 0,
+                }
+            ]
+    # Inserting multiple documents (rows) into the collection (table)
+    # Note: To insert one document, object must be a dictionary and use
+    # insert_one(object)
+    db.classes_collection.insert_many(classes)
+
+
+def check_insertion_classes(db):
+    # Get all the documents in a collection with find()
+    print("\nPRINTING ALL CLASSES")
+    for classs in db.classes_collection.find():
+        pprint.pprint(classs)
+    # Get first document matching the condition passed in from a collection with
+    # find_one(). If nothing is specified, first doc in collection is passed back
+    print("\nQUERYING CSC_202")
+    major_obj = db['classes_collection'].find_one({"cid":"CSC_202"})
+    pprint.pprint(major_obj);
+    print("\nQUERYING MATH_143")
+    major_obj = db['classes_collection'].find_one({"cid":"MATH_143"})
+    pprint.pprint(major_obj);
+
 client = MongoClient()
 dbnames = client.list_database_names()
 dbname = "prereq"
 if dbname in dbnames:
-    print("Dropping database")
+    print("Dropping database", dbname)
     client.drop_database(dbname)
 prereq_db = client[dbname]
-majors = [
-        {
-            "cid": "CSC",
-            "Name": "Computer Science",
-            "Needed": [],
-            "Support": [],
-            "GEs": [],
-            "Units": 0,
-            "Concentrations": []
-            },
-        {
-            "cid": "MATH",
-            "Name": "Mathematics",
-            "Needed": [],
-            "Support": [],
-            "GEs": [],
-            "Units": 0,
-            "Concentrations": []
-            }
-         ]
-# Getting a collection (table) from a database
-collection = prereq_db.majors_collection
-# Inserting multiple documents (rows) into the collection (table)
-# Note: To insert one document, object must be a dictionary and use
-# insert_one(object)
-collection.insert_many(majors)
+insert_majors_collection(prereq_db)
+check_insertion_majors(prereq_db)
+insert_classes_collection(prereq_db)
+check_insertion_classes(prereq_db)
+print("\nAll Collections:")
 pprint.pprint(prereq_db.list_collection_names())
-# Get all the documents in a collection with find()
-print("\nPRINTING ALL MAJORS")
-for major in collection.find():
-    pprint.pprint(major)
-# Get first document matching the condition passed in from a collection with
-# find_one(). If nothing is specified, first doc in collection is passed back
-print("\nQUERYING CSC")
-major_obj = prereq_db['majors_collection'].find_one({"cid":"CSC"})
-pprint.pprint(major_obj);
-print("\nQUERYING MATH")
-major_obj = prereq_db['majors_collection'].find_one({"cid":"MATH"})
-pprint.pprint(major_obj);
-
