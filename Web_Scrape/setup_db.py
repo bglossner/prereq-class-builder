@@ -50,6 +50,8 @@ def insert_classes_collection(db):
                 "Majors": [], #Should be mid
                 "Terms_offered": [],
                 "Units": 0,
+                "USCP": False,
+                "GWR": False
                 },
             {
                 "cid": "MATH_143",
@@ -58,6 +60,8 @@ def insert_classes_collection(db):
                 "Majors": [], #Should be mid
                 "Terms_offered": [],
                 "Units": 0,
+                "USCP": False,
+                "GWR": False
                 }
             ]
     # Inserting multiple documents (rows) into the collection (table)
@@ -80,6 +84,36 @@ def check_insertion_classes(db):
     major_obj = db['classes_collection'].find_one({"cid":"MATH_143"})
     pprint.pprint(major_obj);
 
+def insert_general_ed_collection(db):
+    general_ed = [
+            {
+                "gid": "A1",
+                "classes": [],
+                "majors":[]
+                },
+            {
+                "gid": "A2",
+                "classes": [],
+                "majors":[]
+                }
+            ]
+    # Inserting multiple documents (rows) into the collection (table)
+    # Note: To insert one document, object must be a dictionary and use
+    # insert_one(object)
+    db.general_ed_collection.insert_many(general_ed)
+
+
+def check_insertion_general_ed(db):
+    # Get all the documents in a collection with find()
+    print("\nPRINTING ALL GENERAL ED")
+    for ge in db.general_ed_collection.find():
+        pprint.pprint(ge)
+    # Get first document matching the condition passed in from a collection with
+    # find_one(). If nothing is specified, first doc in collection is passed back
+    print("\nQUERYING A1")
+    major_obj = db['general_ed_collection'].find_one({"gid":"A1"})
+    pprint.pprint(major_obj);
+
 client = MongoClient()
 dbnames = client.list_database_names()
 dbname = "prereq"
@@ -91,5 +125,7 @@ insert_majors_collection(prereq_db)
 check_insertion_majors(prereq_db)
 insert_classes_collection(prereq_db)
 check_insertion_classes(prereq_db)
+insert_general_ed_collection(prereq_db)
+check_insertion_general_ed(prereq_db)
 print("\nAll Collections:")
 pprint.pprint(prereq_db.list_collection_names())
