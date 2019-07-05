@@ -159,12 +159,13 @@ if dbname in dbnames:
     client.drop_database(dbname)
 prereq_db = client[dbname]
 insert_majors_collection(prereq_db)
-check_insertion_majors(prereq_db)
 insert_minors_collection(prereq_db)
-check_insertion_minors(prereq_db)
 insert_classes_collection(prereq_db)
-check_insertion_classes(prereq_db)
 insert_general_ed_collection(prereq_db)
-check_insertion_general_ed(prereq_db)
+# Uncomment below four lines for testing purposes. Caution: very long output. 
+#check_insertion_majors(prereq_db)
+#check_insertion_minors(prereq_db)
+#check_insertion_classes(prereq_db)
+#check_insertion_general_ed(prereq_db)
 print("\nAll Collections:")
 pprint.pprint(prereq_db.list_collection_names())
