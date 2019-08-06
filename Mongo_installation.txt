@@ -1,0 +1,11 @@
+Mongodb on MAC: 
+- Link: https://treehouse.github.io/installation-guides/mac/mongo-mac.html
+- Run Mongo daemon: mongod
+- Run Mongo shell: mongo
+- Exit Mongo shell: quit()
+- Error: Mongod complains that there is no /data/db folder?
+   - run: sudo mkdir -p /data/db && sudo chown /data/db
+
+PyMongo:
+- Install: python3 -m pip install pymongo
+- 

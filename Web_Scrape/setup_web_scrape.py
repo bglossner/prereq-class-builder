@@ -46,15 +46,17 @@ def get_majors():
     if response is not None:
         html = BeautifulSoup(response, 'html.parser')
         for td in html.find_all('td'):
-            course = re.search("(([A-Za-z][a-z']+\s?)+)\(([A-Z]+)\)", td.text)
+            course = re.search("(([\w][a-z']+\s?)+)\(([A-Z]+)\)", td.text)
             courses[course.group(1).rstrip()] = course.group(3)
     else:
         print("Response was null")
     print(courses)
     return courses
 
-def getCourses(url):
+def getCourses(majorName):
+    url = "http://catalog.calpoly.edu" + majorName
     response = simple_get(url)
+    print(url)
     if response:
         html = BeautifulSoup(response, 'html.parser')
         table =  html.find('table', attrs={"class": "sc_courselist"})
@@ -83,18 +85,16 @@ def getCourses(url):
         print("Invalid URL")
 
 def getMajors():
-    one = True
     url = 'http://catalog.calpoly.edu/programsaz/'
     response = simple_get(url)
     if response is not None:
         html = BeautifulSoup(response, 'html.parser')
         for p in html.find_all('p'):
-            match = re.search("^([\w\s]+), BS", p.text)
+            match = re.search("^([\w\s]+), (BS|BArch|BFA|BA|BLA)", p.text)
             if (match):
-                url = 'http://catalog.calpoly.edu' + p.find('a')['href']
+                url = p.find('a')['href']
                 majorName = match.group(1)
-                if (one): 
-                    getCourses(url)
-                    one = False
+                print("For: ", majorName, url)
+                getCourses(url)
 
-getMajors()
+getCourses("/collegesandprograms/collegeofengineering/generalengineering/bsgeneralengineering/")
